@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Main Page";    
+}
+
+@model TwitterProxy.Models.TwitterRequest
+
+
+@using (Html.BeginForm("Index", "Twitter", FormMethod.Post, new { @class = "form-horizontal show-grid" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        @Html.LabelFor(dto => dto.HashTag,"ArticleNumber")
+
+        @Html.TextBoxFor(dto => dto.HashTag, new { @class = "form-control" })
+
+    </div>
+    @Html.ValidationSummary()
+    <div class="clearfix" style="padding-left: 150px;">
+        <button type="submit" class="btn btn-success"> Save</button>
+    </div>
+}
+
