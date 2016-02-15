@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Tweetinvi.Core.Interfaces.ITweet>
+
+
+    @{
+        foreach (var tweet in Model)
+        {
+            <div class="col-md-11" style="margin-top:5%">
+                <div class="col-sm-2">
+                    
+                    <label>@Html.Raw(tweet.CreatedBy.Name)</label>
+                </div>
+                <div class="col-sm-2">
+                    <span class="text-info">@Html.Raw(tweet.CreatedAt)</span>
+                </div>
+                <div class="col-sm-8">
+                    <span class="text-muted">@Html.Raw(tweet.Text)</span>
+                </div>
+            </div>
+        }
+    
+}

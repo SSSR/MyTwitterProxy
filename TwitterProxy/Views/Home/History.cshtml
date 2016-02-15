@@ -2,6 +2,12 @@
 @{
     ViewBag.Title = "History";
 }
+@model IEnumerable<Tweetinvi.Core.Interfaces.ITweet>
+@using GridMvc.Html
 
-<h2>History</h2>
-
+@Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(dto => dto.CreatedBy.Name).Titled("Author").SetWidth(55);
+                        columns.Add(dto => dto.CreatedAt).SetWidth(55);
+                        columns.Add(dto => dto.Text);
+                    }).WithPaging(10)

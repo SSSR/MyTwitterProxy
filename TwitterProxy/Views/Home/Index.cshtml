@@ -4,19 +4,42 @@
 
 @model TwitterProxy.Models.TwitterRequest
 
+<script>
+   
+    function SearchTweet() {
+        var query = $("#query").val();
+        if (query == null)
+        {
+            alert("input field is required!");
+            return;
+        }
+        $.ajax({
+            type: "POST",
+            url: "/Home/Twitter/",
+            data: {
+                HashTag: query,
+                Limit: 10
+            },
+            success: function (viewHTML) {
+                $("#tweets").html(viewHTML);
+            },
+            error: function (errorData) { onError(errorData); }
+        });
+    }
+</script>
 
-@using (Html.BeginForm("Index", "Twitter", FormMethod.Post, new { @class = "form-horizontal show-grid" }))
-{
-    @Html.AntiForgeryToken()
-    <div class="form-group">
-        @Html.LabelFor(dto => dto.HashTag,"ArticleNumber")
-
-        @Html.TextBoxFor(dto => dto.HashTag, new { @class = "form-control" })
-
+    <h3 class="text-center h3">Tweet searcher</h3>
+    <div id="form" class="form-inline text-center">
+      
+       
+        @Html.TextBoxFor(dto => dto.HashTag, new { id="query", @class = "form-control" })
+      
+        <button id="submit" onclick="SearchTweet()" class="btn btn-success">Search</button>
     </div>
     @Html.ValidationSummary()
-    <div class="clearfix" style="padding-left: 150px;">
-        <button type="submit" class="btn btn-success"> Save</button>
-    </div>
-}
+
+<div style="margin-top:5%" id="tweets">
+   
+</div>
+
 
