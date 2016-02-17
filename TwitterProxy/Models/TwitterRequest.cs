@@ -10,6 +10,7 @@ namespace TwitterProxy.Models
     {
         
         public int Limit { get; set; }
+
         public string HashTag { get; set; }
     }
 }

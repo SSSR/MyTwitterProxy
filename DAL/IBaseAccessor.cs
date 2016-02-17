@@ -8,7 +8,9 @@ namespace DAL
 {
     public interface IBaseAccessor
     {
-        ICollection<TweetDto> GetTweets(int count, int offset);
-        void InsertTweets(ICollection<TweetDto> tweets);
+        IQueryable<Tweet> GetTweets();
+        void InsertTweets(IEnumerable<Tweet> tweets);
+
+        void RemoveTweet(Guid id);
     }
 }

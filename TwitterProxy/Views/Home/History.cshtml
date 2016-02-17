@@ -1,13 +1,17 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "History";
 }
-@model IEnumerable<Tweetinvi.Core.Interfaces.ITweet>
+
+@model IQueryable<DAL.Tweet>
 @using GridMvc.Html
 
 @Html.Grid(Model).Columns(columns =>
                     {
-                        columns.Add(dto => dto.CreatedBy.Name).Titled("Author").SetWidth(55);
-                        columns.Add(dto => dto.CreatedAt).SetWidth(55);
+                        columns.Add(dto => dto.Author).Titled("Author").SetWidth(55);
+                        columns.Add(dto => dto.CreatedAt).SetWidth(75);
+                        columns.Add(dto => dto.QueryKey).SetWidth(45);
                         columns.Add(dto => dto.Text);
+                        columns.Add().Encoded(false)
+       .Sanitized(false)
+       .RenderValueAs(dto => Html.ActionLink("Delete", "Delete", "Home", new { id = dto.Id }, new object { }));
                     }).WithPaging(10)

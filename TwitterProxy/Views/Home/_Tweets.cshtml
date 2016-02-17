@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Tweetinvi.Core.Interfaces.ITweet>
+﻿@model IEnumerable<DAL.Tweet>
 
 
     @{
@@ -7,7 +7,7 @@
             <div class="col-md-11" style="margin-top:5%">
                 <div class="col-sm-2">
                     
-                    <label>@Html.Raw(tweet.CreatedBy.Name)</label>
+                    <label>@Html.Raw(tweet.Author)</label>
                 </div>
                 <div class="col-sm-2">
                     <span class="text-info">@Html.Raw(tweet.CreatedAt)</span>

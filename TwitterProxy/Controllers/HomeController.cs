@@ -1,9 +1,9 @@
-﻿using BLToolkit.DataAccess;
-using DAL;
+﻿using DAL;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Tweetinvi;
@@ -26,7 +26,7 @@ namespace TwitterProxy.Controllers
         public HomeController()
         {
             Auth.SetUserCredentials(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
-            _accessor = DataAccessor.CreateInstance<BaseAccessor>();
+            _accessor = BaseAccessor.GetInstance();
         }
 
         public ActionResult Index()
@@ -36,23 +36,36 @@ namespace TwitterProxy.Controllers
 
         public ActionResult History()
         {
-            return View();
+           
+            return View( _accessor.GetTweets());
+        }
+
+        public ActionResult Delete(Guid id)
+        {
+            _accessor.RemoveTweet(id);
+            return RedirectToAction("History");
         }
 
         [HttpPost]
         public ActionResult Twitter(TwitterRequest query)
         {
             if(query == null || string.IsNullOrEmpty(query.HashTag))
-            {
-                ModelState.AddModelError("query key is required!", new ArgumentException());
+            {              
                 return PartialView("_Tweets", new List<ITweet>());
             }
             
             var tweets = Tweetinvi.Search.SearchTweets(new TweetSearchParameters(query.HashTag)
             { 
-                SearchQuery = query.HashTag,
-                MaximumNumberOfResults = query.Limit,                
+                SearchQuery = query.HashTag                   
+            }).Select(t=> new DAL.Tweet{
+                CreatedAt = t.CreatedAt.ToString("s"),
+                Text = t.Text,
+                Author = t.CreatedBy.Name,
+                QueryKey = query.HashTag
+          
             });
+            Task.Run(() => { _accessor.InsertTweets(tweets); });
+           
 
             return PartialView("_Tweets",tweets);
         }

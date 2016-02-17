@@ -9,13 +9,19 @@
 
 </head>
 <body>
-
-    <div class="container body-content">
-        @RenderBody()
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav ">
+            <li class="h4">@Html.ActionLink("Search", "Index", "Home")</li>
+            <li class="h4">@Html.ActionLink("History", "History", "Home")</li>
+        </ul>      
     </div>
+    <hr />
+        <div class="container body-content">
+            @RenderBody()
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
 </body>
 </html>
