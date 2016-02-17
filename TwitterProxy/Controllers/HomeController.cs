@@ -49,7 +49,7 @@ namespace TwitterProxy.Controllers
         [HttpPost]
         public ActionResult Twitter(TwitterRequest query)
         {
-            if(query == null || string.IsNullOrEmpty(query.HashTag))
+            if(query == null || string.IsNullOrEmpty(query.HashTag) || string.IsNullOrWhiteSpace(query.HashTag))
             {              
                 return PartialView("_Tweets", new List<ITweet>());
             }

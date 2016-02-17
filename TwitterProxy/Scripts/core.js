@@ -1,6 +1,7 @@
 ﻿function SearchTweet() {
     var query = $("#query").val();
-    if (query == null || query == "")
+    
+    if (query == null || query.trim() == ""  )
     {
         alert("query key is required!");
         return;
